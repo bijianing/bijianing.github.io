@@ -1,0 +1,34 @@
+# Site settings
+name: Notes ...
+email: bijianing@126.com
+author: Jianing Bi
+url: http://bijianing.github.io
+#resume_site: http://www.hifreud.com/Resume.io/
+github: https://github.com/bijianing/
+#baseurl: ""
+description: Actually, simple is the best!
+meta_description: 学而不思则罔;思而不学则殆;生命不止;折腾不休
+motto: It's our wits that make us men.
+banner: 学而不思则罔，思而不学则殆。
+
+permalink: /:categories/:title.html
+#permalink: /:year/:month/:day/:title/
+paginate: 10
+
+plugins: [jekyll-paginate]
+
+exclude: ['README.md', 'Gemfile.lock', 'Gemfile', 'Rakefile']
+
+#github_username: luoyan35714
+
+#baidu_analysis: 94be4b0f9fc5d94cc0d0415ea6761ae9
+
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+#markdown: redcarpet
+#highlighter: pygments
+#
+kramdown:
+    input:  GFM
