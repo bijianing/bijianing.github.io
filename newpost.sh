@@ -24,7 +24,7 @@ for a in $* ; do
 	title+=" ${a^}"
 done
 
-path+=${filename}.md
+path+=/${filename}.md
 
 if [ -f "$path" ]; then
 	echo "file:$path exists, overwrite it? [y/N]"
