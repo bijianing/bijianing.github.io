@@ -1,7 +1,9 @@
 # bijianing.github.io
 personal memo
 
-#setup jekyll
+
+# setup jekyll
+
 ```
 sudo apt-get install ruby-full build-essential zlib1g-dev
 
@@ -18,8 +20,10 @@ bundler install
 ```
 
 
-#setup systemd service
+# setup systemd service
+
 ```
 cd _jekyll_service
 make install
 ```
+
