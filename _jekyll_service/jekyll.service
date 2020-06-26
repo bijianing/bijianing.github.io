@@ -1,0 +1,15 @@
+[Unit]
+Description=Start Jekyll server for bijianing.github.io
+
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/default/jekyll.bijianing.github.io
+ExecStart=ruby $JEKYLL server -s $SRCDIR -d $DSTDIR $JEKYLL_OPTS
+ExecStop=kill -INT $MAINPID
+
+
+[Install]
+WantedBy = multi-user.target
+
+
