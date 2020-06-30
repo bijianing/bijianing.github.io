@@ -29,7 +29,7 @@ openssl commands
 
 references
 ==========
-https://cspssl.jp/guide/mechanism.php
-https://milestone-of-se.nesuke.com/sv-advanced/digicert/digital-certification-summary/
-https://blog.freedom-man.com/openssl-command/
+https://cspssl.jp/guide/mechanism.php  
+https://milestone-of-se.nesuke.com/sv-advanced/digicert/digital-certification-summary/  
+https://blog.freedom-man.com/openssl-command/  
 
