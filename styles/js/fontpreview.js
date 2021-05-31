@@ -70,16 +70,17 @@ function initFromLocalStorage() {
 }
 
 function getItemColor(i) {
-    switch (i % 4) {
-        case 0:
-            return "#a0a0a0";
-        case 1:
-            return "#a8a8a8";
-        case 2:
-            return "#b0b0b0";
-        case 3:
-            return "#b8b8b8";
-      }
+    return "#eeeeee";
+    // switch (i % 4) {
+    //     case 0:
+    //         return "#a0a0a0";
+    //     case 1:
+    //         return "#a8a8a8";
+    //     case 2:
+    //         return "#b0b0b0";
+    //     case 3:
+    //         return "#b8b8b8";
+    //   }
 }
 function setFontIndex(i, font) {
     fontList[i] = font;
