@@ -1,19 +1,23 @@
+<!DOCTYPE html>
 <html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-      <title>Web Font Sample</title>
-  <style type="text/css" media="screen, print">
-    @font-face {
-      font-family: "OZ焦糖体";
-      src: url("fonts/OZ焦糖体.ttf");
-    }
 
-    body { font-family: "OZ焦糖体", serif }
-  </style>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="fonts/fonts.css">
+    <link rel="stylesheet" href="styles/css/fontpreview_style.css">
+    <script charset="UTF-8" src="styles/js/fontpreview.js"></script>
 </head>
+
 <body>
-  This is Bitstream Vera Serif Bold.<br>
-  日本語<br>
-  这是汉语<br>
+
+    <h2>Chinese Font Preview</h2>
+    <p>Please input text and press "Preview" button <button onclick="renderText()">Preview</button></p>
+
+    <textarea id="textAreaForInput" name="story" rows="5" cols="33">请在这里输入汉语</textarea>
+    <div id="outputArea"></div>
+
+    <script> renderText();</script>
 </body>
+
 </html>
