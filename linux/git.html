@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git - Notes ...</title>
+
+    <link rel="shortcut icon" href="/styles/images/favicon.jpg">
+    <link rel="icon" href="/styles/images/favicon.jpg">
+
+    <link rel="stylesheet" href="/assets/css/wordpress.css">
+    <link rel="canonical" href="/linux/git.html">
+
+    <link rel="stylesheet" href="/assets/prism/prism.css">
+    <script src="/assets/prism/prism.js"></script>
+    <script src="https://kit.fontawesome.com/45a69050db.js" crossorigin="anonymous"></script>
+
+    <meta name="keywords" content="Git, Notes ..., 学而不思则罔;思而不学则殆;生命不止;折腾不休">
+    <meta name="description" content="学而不思则罔;思而不学则殆;生命不止;折腾不休">
+</head>
+
+<body class="index">
+    <header id="header" itemscope="" itemtype="https://schema.org/WPHeader">
+    <div id="head-in">
+        <div id="head-parallax" style="overflow: hidden; background-position: 0px 0px;">
+            <div class="head-cover" style="transform: translate(0px, 0px);">
+                <div class="info" itemscope="" itemtype="https://schema.org/Website">
+                    <h1 id="sitename">
+                        <a href="/" itemprop="url"><img src="/assets/images/logo.svg" alt="" width="150" height="150" class="onepoint" itemprop="image" sizes="(max-width: 150px) 100vw, 150px"><span itemprop="name about">Linux Ref</span></a>
+                    </h1>
+                    <meta itemprop="alternativeHeadline" content="Linux tutorials, settings etc.">
+                </div>
+                <!--/.info-->
+            </div>
+            <!--/.head-cover-->
+        </div>
+        <!--/#head-parallax-->
+    </div>
+</header>
+    <div class="container">
+        
+
+<div itemprop="breadcrumb">
+    <ol id="breadcrumb">
+        <li>
+            <i class="fas fa-home"></i>
+            <a href="/">ホーム</a>
+            <i class="arrow">&gt;</i>
+        </li>
+        
+        
+        
+            
+            
+            
+
+
+
+
+
+<li>
+
+<i class="fas fa-folder-open"></i>
+<a href="/category/linux/">Linux</a>
+
+</li>
+
+    </ol>
+</div>
+<!-- 
+    <div>value of name listsize:1</div>
+    <div>value of href listsize:1</div>
+    <div>value of count:0</div>
+    
+    <div>value of i:0</div>
+    
+     -->
+<div id="primary" class="clearfix">
+    <main id="main">
+        <article>
+            <div id="core" class="grid">
+                <div itemprop="mainEntityOfPage" id="mainEntity" class="post post-109 type-post status-publish format-standard has-post-thumbnail hentry category-server tag-debian tag-linux tag-omv tag-openmediavault tag-server tag-wordpress ja">
+                    <header id="article-header">
+                        <h1 class="entry-title" itemprop="headline name">Git</h1>
+                    </header>
+                    <div class="clearfix">
+                        <p class="meta">
+                            <i class="far fa-clock"></i>
+                            <span class="date published">
+                                <time class="entry-date updated" datetime="2018-04-04T00:00:00+09:00" itemprop="datePublished">
+                                    04 Apr 2018
+                                </time>
+                            </span>
+                            <i class="fas fa-redo-alt"></i>
+                            <span class="date">
+                                <meta itemprop="dateModified" content="2020-08-23T17:24:54+09:00">
+                                DUMMY STRING
+                            </span>
+                        </p>
+                        <div id="toc_container">
+<span class="toc_title">Contents</span><input id="toc_toggle" type="checkbox" checked><label class="toc_toggle" for="toc_toggle"></label>
+                            <ul id="" class="toc_list">
+<li class=" toc-h1"><a href="#reset">reset</a></li>
+<li class=" toc-h1">
+<a href="#checkout">checkout</a>
+<ul>
+<li class=" toc-h2"><a href="#checkout-a-specific-file-to-a-specific-revision">checkout a specific file to a specific revision</a></li>
+</ul>
+</li>
+<li class=" toc-h1">
+<a href="#log">log</a>
+<ul>
+<li class=" toc-h2"><a href="#find-a-deleted-file-in-the-project-commit-history">find a deleted file in the project commit history?</a></li>
+</ul>
+</li>
+<li class=" toc-h1">
+<a href="#clean">clean</a>
+<ul>
+<li class=" toc-h2"><a href="#options">options</a></li>
+<li class=" toc-h2">
+<a href="#examples">examples</a>
+<ul>
+<li class=" toc-h3"><a href="#git-clean--fdx">git clean -fdx</a></li>
+<li class=" toc-h3"><a href="#git-clean--xf">git clean -xf</a></li>
+<li class=" toc-h3"><a href="#git-clean--df">git clean -df</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+                        </div>
+                        <ul id="markdown-toc">
+  <li><a href="#reset" id="markdown-toc-reset">reset</a></li>
+  <li>
+<a href="#checkout" id="markdown-toc-checkout">checkout</a>    <ul>
+      <li><a href="#checkout-a-specific-file-to-a-specific-revision" id="markdown-toc-checkout-a-specific-file-to-a-specific-revision">checkout a specific file to a specific revision</a></li>
+    </ul>
+  </li>
+  <li>
+<a href="#log" id="markdown-toc-log">log</a>    <ul>
+      <li><a href="#find-a-deleted-file-in-the-project-commit-history" id="markdown-toc-find-a-deleted-file-in-the-project-commit-history">find a deleted file in the project commit history?</a></li>
+    </ul>
+  </li>
+  <li>
+<a href="#clean" id="markdown-toc-clean">clean</a>    <ul>
+      <li><a href="#options" id="markdown-toc-options">options</a></li>
+      <li>
+<a href="#examples" id="markdown-toc-examples">examples</a>        <ul>
+          <li><a href="#git-clean--fdx" id="markdown-toc-git-clean--fdx">git clean -fdx</a></li>
+          <li><a href="#git-clean--xf" id="markdown-toc-git-clean--xf">git clean -xf</a></li>
+          <li><a href="#git-clean--df" id="markdown-toc-git-clean--df">git clean -df</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="reset">reset</h1>
+
+<ul>
+  <li>
+<code>--hard</code>：「HEADの位置・インデックス・ワーキングツリー」全て</li>
+  <li>
+<code>--mixed（or オプション無し）</code>：「HEADの位置・インデックス」</li>
+  <li>
+<code>--soft</code>：「HEADの位置」のみ</li>
+</ul>
+
+<h1 id="checkout">checkout</h1>
+
+<h2 id="checkout-a-specific-file-to-a-specific-revision">checkout a specific file to a specific revision</h2>
+<p><a href="https://stackoverflow.com/questions/215718/reset-or-revert-a-specific-file-to-a-specific-revision-using-git">ref</a></p>
+
+<pre><code class="line-numbers">git checkout c5f567 -- file1/to/restore file2/to/restore
+</code></pre>
+
+<h1 id="log">log</h1>
+
+<h2 id="find-a-deleted-file-in-the-project-commit-history">find a deleted file in the project commit history?</h2>
+<p><a href="https://stackoverflow.com/questions/7203515/git-how-to-find-a-deleted-file-in-the-project-commit-history">ref</a></p>
+
+<pre><code class="line-numbers">git log --all --full-history -- **/thefile.*
+</code></pre>
+
+<h1 id="clean">clean</h1>
+
+<h2 id="options">options</h2>
+<ul>
+  <li>
+<code>-f, --force</code>: If the Git configuration variable clean.requireForce is not set to false, git clean will refuse to delete files or directories unless given -f.</li>
+  <li>
+<code>-x</code>:  Git では通常無視されるファイルを削除します</li>
+  <li>
+<code>-d</code>:  カレントディレクトリ内の追跡対象外ファイルおよび追跡対象外ディレクトリを削除します。</li>
+  <li>
+<code>-n, --dry-run</code>: Don’t actually remove anything, just show what would be done.</li>
+</ul>
+
+<h2 id="examples">examples</h2>
+
+<h3 id="git-clean--fdx">git clean -fdx</h3>
+<p>カレントディレクトリ内の追跡対象外ファイルおよび追跡対象外ディレクトリ、および Git では通常無視されるファイルを削除します。<br>
+<code>-n</code>オプションをつける事で、削除されるファイル一覧を見る事もできます。</p>
+
+<h3 id="git-clean--xf">git clean -xf</h3>
+<p>カレントディレクトリ内の追跡対象外ファイルおよび Git では通常無視されるファイルを削除します。</p>
+
+<h3 id="git-clean--df">git clean -df</h3>
+<p>カレントディレクトリ内の追跡対象外ファイルおよび追跡対象外ディレクトリを削除します。</p>
+
+
+                    </div>
+                </div>
+            </div>
+        </article>
+    </main>
+    <div id="sidebar" itemscope="itemscope" itemtype="http://schema.org/WPSideBar" style="min-height: 298px;">
+    <div id="side">
+        <aside>
+            <div id="side-fixed">
+                <div id="categories-4" class="widget widget_categories">
+                    <h3 class="side-title">カテゴリー</h3>
+
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="/category/linux">Linux(19)</a>
+                            
+                        </li>
+                        
+                        <li>
+                            <a href="/category/shell">シェル(1)</a>
+                            
+                        </li>
+                        
+                        <li>
+                            <a href="/category/network">ネットワーク(1)</a>
+                            
+                        </li>
+                        
+                        <li>
+                            <a href="/category/site">Web関連(2)</a>
+                            
+                        </li>
+                        
+                        <li>
+                            <a href="/category/subcat1">サブカテゴリ１(3)</a>
+                            
+                            <ul>
+                                
+                                <li>
+                                    <a href="/category/subcat1/subcat2">subcat2(2)</a>
+                                    
+                                    <ul>
+                                        
+                                        <li>
+                                            <a href="/category/subcat1/subcat2/subcat3">subcat3(1)</a>
+                                            
+                                        </li>
+                                        
+                                    </ul>
+                                    
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                    </ul>
+                </div>
+                <div id="search-4" class="widget widget_search">
+                    <h3 class="side-title">検索</h3>
+                    <div id="search" itemscope="" itemtype="https://schema.org/WebSite">
+                        <meta itemprop="url" content="https://linuxref.net/">
+                        <form itemprop="potentialAction" itemscope="" itemtype="https://schema.org/SearchAction" method="get" class="search-form" action="https://linuxref.net/">
+                            <meta itemprop="target" content="https://linuxref.net/?s={s}">
+<label><input itemprop="query-input" type="search" class="search-field" placeholder="  サイト内検索" value="" name="s" title="サイト内検索" required=""></label><input type="submit" class="search-submit" value="検索">
+                        </form>
+                    </div>
+                </div>
+                <div id="search-4" class="widget widget_search">
+                    <h3 class="side-title">Debug</h3>
+
+                    <div>site.data.a(level):</div>
+                    <div>site.data.b(level):</div>
+                    <div>site.data.c(level):</div>
+                    <div>site.data.d(level):</div>
+                    <div>page.data[category]:linux</div>
+                    <div>page.data[newdata]:</div>
+
+                </div>
+            </div>
+        </aside>
+    </div>
+    <!--/#side-->
+</div>
+</div>
+    </div>
+    <div id="footer" itemscope="" itemtype="https://schema.org/WPFooter">
+    <footer>
+        <div id="copyright">
+            <p class="copy">Copyright © <span itemprop="copyrightYear">2021</span> <span itemprop="copyrightHolder name">Jianing Bi</span> All Rights Reserved.</p>
+        </div>
+    </footer>
+</div>
+</body>
+
+</html>

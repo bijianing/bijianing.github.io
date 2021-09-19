@@ -1,30 +1,535 @@
----
-layout: null
----
-<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>{{ site.title | xml_escape }}</title>
-    <description>{{ site.description | xml_escape }}</description>
-    <link>{{ site.url }}{{ site.baseurl }}/</link>
-    <atom:link href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}" rel="self" type="application/rss+xml"/>
-    <pubDate>{{ site.time | date_to_rfc822 }}</pubDate>
-    <lastBuildDate>{{ site.time | date_to_rfc822 }}</lastBuildDate>
-    <generator>Jekyll v{{ jekyll.version }}</generator>
-    {% for post in site.posts limit:10 %}
-      <item>
-        <title>{{ post.title | xml_escape }}</title>
-        <description>{{ post.content | xml_escape }}</description>
-        <pubDate>{{ post.date | date_to_rfc822 }}</pubDate>
-        <link>{{ post.url | prepend: site.baseurl | prepend: site.url }}</link>
-        <guid isPermaLink="true">{{ post.url | prepend: site.baseurl | prepend: site.url }}</guid>
-        {% for tag in post.tags %}
-        <category>{{ tag | xml_escape }}</category>
-        {% endfor %}
-        {% for cat in post.categories %}
-        <category>{{ cat | xml_escape }}</category>
-        {% endfor %}
-      </item>
-    {% endfor %}
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="http://bijianing.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://bijianing.github.io/" rel="alternate" type="text/html" /><updated>2021-09-19T23:30:37+09:00</updated><id>http://bijianing.github.io/feed.xml</id><title type="html">Notes …</title><subtitle>Actually, simple is the best!</subtitle><author><name>Jianing Bi</name></author><entry><title type="html">Test</title><link href="http://bijianing.github.io/linux/test.html" rel="alternate" type="text/html" title="Test" /><published>2021-09-12T14:43:21+09:00</published><updated>2021-09-12T14:43:21+09:00</updated><id>http://bijianing.github.io/linux/test</id><content type="html" xml:base="http://bijianing.github.io/linux/test.html">&lt;h1 id=&quot;title&quot;&gt;title&lt;/h1&gt;
+
+&lt;p&gt;日本語のことをかいてみる。フォントがあっているか？&lt;/p&gt;
+
+&lt;h2 id=&quot;sub-title&quot;&gt;sub title&lt;/h2&gt;
+
+&lt;h3 id=&quot;sub-sub-title&quot;&gt;sub sub title&lt;/h3&gt;
+
+&lt;h4 id=&quot;sub-sub-sub-title&quot;&gt;sub sub sub title&lt;/h4&gt;
+
+&lt;h2 id=&quot;sub-title-1&quot;&gt;sub title&lt;/h2&gt;
+
+&lt;h3 id=&quot;sub-sub-title-1&quot;&gt;sub sub title&lt;/h3&gt;
+
+&lt;h4 id=&quot;sub-sub-sub-title-1&quot;&gt;sub sub sub title&lt;/h4&gt;
+
+&lt;h5 id=&quot;sub-sub-sub-title-2&quot;&gt;sub sub sub title&lt;/h5&gt;</content><author><name>Jianing Bi</name></author><category term="linux" /><summary type="html">title</summary></entry><entry><title type="html">Ubuntu Settings</title><link href="http://bijianing.github.io/linux/ubuntu-settings.html" rel="alternate" type="text/html" title="Ubuntu Settings" /><published>2020-06-25T00:00:00+09:00</published><updated>2020-06-25T00:00:00+09:00</updated><id>http://bijianing.github.io/linux/ubuntu-settings</id><content type="html" xml:base="http://bijianing.github.io/linux/ubuntu-settings.html">&lt;p&gt;About Ubuntu’s Settings memo&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;h1 id=&quot;ubuntu-mouse-not-work-after-resume-from-sleep&quot;&gt;Ubuntu mouse not work after resume from sleep&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Make sure your device module is psmouse by running,
+    &lt;pre&gt;&lt;code&gt;lsmod | grep psmouse
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;p&gt;if its not, find the relavant module name.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;create script for resume from sleep
+    &lt;pre&gt;&lt;code&gt;$ cd /lib/systemd/system-sleep/
+$ sudo vi fixtouchpad
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;then paste and save the following
+    &lt;pre&gt;&lt;code&gt;#!/bin/bash
+[ &quot;$1&quot; = &quot;post&quot; ] &amp;amp;&amp;amp; exec modprobe psmouse
+[ &quot;$1&quot; = &quot;pre&quot; ] &amp;amp;&amp;amp; exec rmmod psmouse
+exit 0
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;p&gt;This will reload your psmouse module after resuming. Replace ‘psmouse’ with your module name.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Be sure to make the script executable
+    &lt;pre&gt;&lt;code&gt;sudo chmod +x fixtouchpad
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;air-capture-form-ubuntu&quot;&gt;Air capture form Ubuntu&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;disable network manager
+    &lt;pre&gt;&lt;code&gt;sudo systemctl stop NetworkManager
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;create network interface
+    &lt;pre&gt;&lt;code&gt;sudo iw phy phy0 interface add wlanmon0 type monitor
+sudo ifconfig wlanmon0 up
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;change channel
+    &lt;pre&gt;&lt;code&gt;sudo iwconfig wlanmon0 channel 11
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;action-when-close-lid&quot;&gt;Action when close lid&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Change &lt;code&gt;HandleLidSwitch&lt;/code&gt; in &lt;code&gt;/etc/systemd/logind.conf&lt;/code&gt;
+    &lt;pre&gt;&lt;code&gt;sudo vi sudo gedit /etc/systemd/logind.conf
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code&gt;HandleLidSwitch=lock&lt;/code&gt; – lock when lid closed.&lt;/li&gt;
+      &lt;li&gt;&lt;code&gt;HandleLidSwitch=ignore&lt;/code&gt; – do nothing.&lt;/li&gt;
+      &lt;li&gt;&lt;code&gt;HandleLidSwitch=poweroff&lt;/code&gt; – shutdown.&lt;/li&gt;
+      &lt;li&gt;&lt;code&gt;HandleLidSwitch=hibernate&lt;/code&gt; – hibernate Ubuntu.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Restart logind
+    &lt;pre&gt;&lt;code&gt;sudo systemctl restart systemd-logind
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;systemd-in-ubuntu&quot;&gt;systemd in Ubuntu&lt;/h1&gt;
+
+&lt;p&gt;reference:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Ubuntu man page &lt;a href=&quot;http://manpages.ubuntu.com/manpages/cosmic/man5/systemd.service.5.html&quot;&gt;systemd.service&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Ubuntu man page &lt;a href=&quot;http://manpages.ubuntu.com/manpages/cosmic/man5/systemd.exec.5.html&quot;&gt;systemd.exec&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;code&gt;systemd&lt;/code&gt; is a manage system for system service. including the action: start/stop/restart, auto start etc.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Concept
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code&gt;Unit File&lt;/code&gt;&lt;br /&gt;
+The file define the service which locate at &lt;code&gt;/etc/systemd/system&lt;/code&gt; or &lt;code&gt;/lib/systemd/system&lt;/code&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;code&gt;/etc/systemd/system&lt;/code&gt;: administrator change setting in this directory&lt;/li&gt;
+          &lt;li&gt;&lt;code&gt;/lib/systemd/system&lt;/code&gt;: default system settings&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;code&gt;Environment File&lt;/code&gt;&lt;br /&gt;
+The file define Environment variables for &lt;code&gt;Unit File&lt;/code&gt;.&lt;br /&gt;
+Specify the &lt;code&gt;Environment File&lt;/code&gt; in &lt;code&gt;Unit File&lt;/code&gt; with &lt;code&gt;EnvironmentFile=/path/to/file&lt;/code&gt;.&lt;br /&gt;
+The location of &lt;code&gt;Environment File&lt;/code&gt; often in &lt;code&gt;/etc/default/*&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code&gt;systemctl&lt;/code&gt; command&lt;br /&gt;
+The command manage services. start / stop / restart etc.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;Unit File&lt;/code&gt;
+    &lt;ul&gt;
+      &lt;li&gt;example
+        &lt;pre&gt;&lt;code&gt;  [Unit]
+  Description=Start Jekyll server for bijianing.github.io
+
+  [Service]
+  Type=simple
+  EnvironmentFile=/etc/default/jekyll.bijianing.github.io
+  ExecStart=ruby $JEKYLL server -s $SRCDIR -d $DSTDIR $JEKYLL_OPTS
+  ExecStop=kill -INT $MAINPID
+
+  [Install]
+  WantedBy = multi-user.target
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;systemctl&lt;/code&gt; command
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code&gt;sudo systemctl daemon-reload&lt;/code&gt;&lt;br /&gt;
+  reload configurations of all units&lt;/li&gt;
+      &lt;li&gt;&lt;code&gt;sudo systemctl [start | stop | restart] unit&lt;/code&gt;&lt;br /&gt;
+  start / stop / restart unit&lt;/li&gt;
+      &lt;li&gt;&lt;code&gt;sudo systemctl status unit&lt;/code&gt;&lt;br /&gt;
+  show status of unit
+  start / stop / restart unit&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;update-kernel-manually&quot;&gt;Update Kernel manually&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;reference&lt;br /&gt;
+&lt;a href=&quot;https://gihyo.jp/admin/serial/01/ubuntu-recipe/0526?page=2&quot;&gt;Ubuntuで最新のカーネルをお手軽にビルドする方法&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;build kernel need 30GB disk space, So I used USB HDD(80GB)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Install necessary packages
+    &lt;pre&gt;&lt;code&gt;sudo apt install git ccache fakeroot libncurses5-dev
+sudo apt build-dep linux
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Download source code
+    &lt;pre&gt;&lt;code&gt;git clone https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+cd linux
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Prepare config file
+    &lt;pre&gt;&lt;code&gt;mkdir ../build
+cp /boot/config-`uname -r` ../build/.config
+scripts/config --file ../build/.config --disable DEBUG_INFO
+make O=../build/ olddefconfig
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Build kernel and modules
+    &lt;pre&gt;&lt;code&gt;time make -j9 O=../build/ LOCALVERSION=-stock
+time make modules -j9 O=../build/ LOCALVERSION=-stock
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Create and install packages for Ubuntu
+    &lt;pre&gt;&lt;code&gt;make bindeb-pkg O=../build/ LOCALVERSION=-stock
+sudo apt install ../*.deb
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;</content><author><name>Jianing Bi</name></author><category term="linux" /><category term="Ubuntu" /><summary type="html">About Ubuntu’s Settings memo Ubuntu mouse not work after resume from sleep Make sure your device module is psmouse by running, lsmod | grep psmouse if its not, find the relavant module name. create script for resume from sleep $ cd /lib/systemd/system-sleep/ $ sudo vi fixtouchpad then paste and save the following #!/bin/bash [ &quot;$1&quot; = &quot;post&quot; ] &amp;amp;&amp;amp; exec modprobe psmouse [ &quot;$1&quot; = &quot;pre&quot; ] &amp;amp;&amp;amp; exec rmmod psmouse exit 0 This will reload your psmouse module after resuming. Replace ‘psmouse’ with your module name. Be sure to make the script executable sudo chmod +x fixtouchpad Air capture form Ubuntu disable network manager sudo systemctl stop NetworkManager create network interface sudo iw phy phy0 interface add wlanmon0 type monitor sudo ifconfig wlanmon0 up change channel sudo iwconfig wlanmon0 channel 11 Action when close lid Change HandleLidSwitch in /etc/systemd/logind.conf sudo vi sudo gedit /etc/systemd/logind.conf HandleLidSwitch=lock – lock when lid closed. HandleLidSwitch=ignore – do nothing. HandleLidSwitch=poweroff – shutdown. HandleLidSwitch=hibernate – hibernate Ubuntu. Restart logind sudo systemctl restart systemd-logind systemd in Ubuntu reference: Ubuntu man page systemd.service Ubuntu man page systemd.exec systemd is a manage system for system service. including the action: start/stop/restart, auto start etc. Concept Unit File The file define the service which locate at /etc/systemd/system or /lib/systemd/system /etc/systemd/system: administrator change setting in this directory /lib/systemd/system: default system settings Environment File The file define Environment variables for Unit File. Specify the Environment File in Unit File with EnvironmentFile=/path/to/file. The location of Environment File often in /etc/default/* systemctl command The command manage services. start / stop / restart etc. Unit File example [Unit] Description=Start Jekyll server for bijianing.github.io [Service] Type=simple EnvironmentFile=/etc/default/jekyll.bijianing.github.io ExecStart=ruby $JEKYLL server -s $SRCDIR -d $DSTDIR $JEKYLL_OPTS ExecStop=kill -INT $MAINPID [Install] WantedBy = multi-user.target systemctl command sudo systemctl daemon-reload reload configurations of all units sudo systemctl [start | stop | restart] unit start / stop / restart unit sudo systemctl status unit show status of unit start / stop / restart unit Update Kernel manually reference Ubuntuで最新のカーネルをお手軽にビルドする方法 build kernel need 30GB disk space, So I used USB HDD(80GB) Install necessary packages sudo apt install git ccache fakeroot libncurses5-dev sudo apt build-dep linux Download source code git clone https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git cd linux Prepare config file mkdir ../build cp /boot/config-`uname -r` ../build/.config scripts/config --file ../build/.config --disable DEBUG_INFO make O=../build/ olddefconfig Build kernel and modules time make -j9 O=../build/ LOCALVERSION=-stock time make modules -j9 O=../build/ LOCALVERSION=-stock Create and install packages for Ubuntu make bindeb-pkg O=../build/ LOCALVERSION=-stock sudo apt install ../*.deb</summary></entry><entry><title type="html">SSL Key Certificate</title><link href="http://bijianing.github.io/network/ssl-key-certificate.html" rel="alternate" type="text/html" title="SSL Key Certificate" /><published>2019-02-21T11:41:52+09:00</published><updated>2019-02-21T11:41:52+09:00</updated><id>http://bijianing.github.io/network/ssl-key-certificate</id><content type="html" xml:base="http://bijianing.github.io/network/ssl-key-certificate.html">&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#ssl-authentication-mechanism&quot; id=&quot;markdown-toc-ssl-authentication-mechanism&quot;&gt;SSL authentication mechanism&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#csr-to-certificate&quot; id=&quot;markdown-toc-csr-to-certificate&quot;&gt;CSR to Certificate&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#openssl-commands&quot; id=&quot;markdown-toc-openssl-commands&quot;&gt;openssl commands&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#references&quot; id=&quot;markdown-toc-references&quot;&gt;references&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;ssl-authentication-mechanism&quot;&gt;SSL authentication mechanism&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&quot;images/ssl_mechanism.png&quot; style=&quot;width:100%&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;csr-to-certificate&quot;&gt;CSR to Certificate&lt;/h1&gt;
+&lt;p&gt;&lt;img src=&quot;images/csr2cert.png&quot; style=&quot;width:100%&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;openssl-commands&quot;&gt;openssl commands&lt;/h1&gt;
+
+&lt;h1 id=&quot;references&quot;&gt;references&lt;/h1&gt;
+&lt;p&gt;https://cspssl.jp/guide/mechanism.php&lt;br /&gt;
+https://milestone-of-se.nesuke.com/sv-advanced/digicert/digital-certification-summary/&lt;br /&gt;
+https://blog.freedom-man.com/openssl-command/&lt;/p&gt;</content><author><name>Jianing Bi</name></author><category term="network" /><summary type="html">SSL authentication mechanism CSR to Certificate openssl commands references SSL authentication mechanism CSR to Certificate openssl commands references https://cspssl.jp/guide/mechanism.php https://milestone-of-se.nesuke.com/sv-advanced/digicert/digital-certification-summary/ https://blog.freedom-man.com/openssl-command/</summary></entry><entry><title type="html">Ip Address Convert</title><link href="http://bijianing.github.io/linux/ip-address-convert.html" rel="alternate" type="text/html" title="Ip Address Convert" /><published>2019-02-06T14:48:56+09:00</published><updated>2019-02-06T14:48:56+09:00</updated><id>http://bijianing.github.io/linux/ip-address-convert</id><content type="html" xml:base="http://bijianing.github.io/linux/ip-address-convert.html">&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#api&quot; id=&quot;markdown-toc-api&quot;&gt;API&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;api&quot;&gt;API&lt;/h1&gt;
+&lt;ol&gt;
+  &lt;li&gt;text to binary: &lt;a href=&quot;https://linuxjm.osdn.jp/html/LDP_man-pages/man3/inet_pton.3.html&quot;&gt;inet_pton&lt;/a&gt;
+    &lt;pre&gt;&lt;code&gt;#include &amp;lt;arpa/inet.h&amp;gt;
+int inet_pton(int af, const char *src, void *dst);
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;binary to text: &lt;a href=&quot;https://linuxjm.osdn.jp/html/LDP_man-pages/man3/inet_ntop.3.html&quot;&gt;inet_ntop&lt;/a&gt;
+    &lt;pre&gt;&lt;code&gt;#include &amp;lt;arpa/inet.h&amp;gt;
+const char *inet_ntop(int af, const void *src,char *dst, socklen_t size);`
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;</content><author><name>Jianing Bi</name></author><category term="linux" /><summary type="html">API API text to binary: inet_pton #include &amp;lt;arpa/inet.h&amp;gt; int inet_pton(int af, const char *src, void *dst); binary to text: inet_ntop #include &amp;lt;arpa/inet.h&amp;gt; const char *inet_ntop(int af, const void *src,char *dst, socklen_t size);`</summary></entry><entry><title type="html">Debug</title><link href="http://bijianing.github.io/linux/debug.html" rel="alternate" type="text/html" title="Debug" /><published>2018-07-26T00:00:00+09:00</published><updated>2018-07-26T00:00:00+09:00</updated><id>http://bijianing.github.io/linux/debug</id><content type="html" xml:base="http://bijianing.github.io/linux/debug.html">&lt;h1 id=&quot;libsegfaultso&quot;&gt;libSegFault.so&lt;/h1&gt;
+
+&lt;p&gt;プリロードすると、プログラムが異常発生した時、の各種dumpしてくれる。&lt;/p&gt;
+
+&lt;h2 id=&quot;source-code&quot;&gt;Source code&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;int main(void)
+{
+        char *ptr = (char*)0x10000000;
+
+        memset(ptr, 0, 128);
+        return 0;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;実行結果&quot;&gt;実行結果&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;export LD_PRELOAD=//lib/x86_64-linux-gnu/libSegFault.so&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./memerr
+*** Segmentation fault
+Register dump:
+
+ RAX: 0000000010000000   RBX: 0000000000000000   RCX: 0000000010000040
+ RDX: 0000000000000080   RSI: 0000000000000000   RDI: 0000000010000000
+ RBP: 00007fffb70800a0   R8 : 00000000004005d0   R9 : 00007f4f5de97ab0
+ R10: 000000000000034e   R11: 00007f4f5d947240   R12: 0000000000400430
+ R13: 00007fffb7080180   R14: 0000000000000000   R15: 0000000000000000
+ RSP: 00007fffb7080088
+
+ RIP: 00007f4f5d947294   EFLAGS: 00010202
+
+ CS: 0033   FS: 0000   GS: 0000
+
+ Trap: 0000000e   Error: 00000006   OldMask: 00000000   CR2: 10000000
+
+ FPUCW: 0000037f   FPUSW: 00000000   TAG: 00000000
+ RIP: 00000000   RDP: 00000000
+
+ ST(0) 0000 0000000000000000   ST(1) 0000 0000000000000000
+ ST(2) 0000 0000000000000000   ST(3) 0000 0000000000000000
+ ST(4) 0000 0000000000000000   ST(5) 0000 0000000000000000
+ ST(6) 0000 0000000000000000   ST(7) 0000 0000000000000000
+ mxcsr: 1f80
+ XMM0:  00000000000000000000000000000000 XMM1:  00000000000000000000000000000000
+ XMM2:  00000000000000000000000000000000 XMM3:  00000000000000000000000000000000
+ XMM4:  00000000000000000000000000000000 XMM5:  00000000000000000000000000000000
+ XMM6:  00000000000000000000000000000000 XMM7:  00000000000000000000000000000000
+ XMM8:  00000000000000000000000000000000 XMM9:  00000000000000000000000000000000
+ XMM10: 00000000000000000000000000000000 XMM11: 00000000000000000000000000000000
+ XMM12: 00000000000000000000000000000000 XMM13: 00000000000000000000000000000000
+ XMM14: 00000000000000000000000000000000 XMM15: 00000000000000000000000000000000
+
+Backtrace:
+/lib/x86_64-linux-gnu/libc.so.6(+0x8f294)[0x7f4f5d947294]
+./memerr[0x40054c]
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf0)[0x7f4f5d8d8830]
+./memerr[0x400459]
+
+Memory map:
+
+00400000-00401000 r-xp 00000000 00:31 20437058                           /misc/home/bjn/wk/test_code/memerr
+00600000-00601000 r--p 00000000 00:31 20437058                           /misc/home/bjn/wk/test_code/memerr
+00601000-00602000 rw-p 00001000 00:31 20437058                           /misc/home/bjn/wk/test_code/memerr
+017d9000-017fa000 rw-p 00000000 00:00 0                                  [heap]
+7f4f5d6a2000-7f4f5d6b8000 r-xp 00000000 fd:00 75497993                   /lib/x86_64-linux-gnu/libgcc_s.so.1
+7f4f5d6b8000-7f4f5d8b7000 ---p 00016000 fd:00 75497993                   /lib/x86_64-linux-gnu/libgcc_s.so.1
+7f4f5d8b7000-7f4f5d8b8000 rw-p 00015000 fd:00 75497993                   /lib/x86_64-linux-gnu/libgcc_s.so.1
+7f4f5d8b8000-7f4f5da78000 r-xp 00000000 fd:00 75497608                   /lib/x86_64-linux-gnu/libc-2.23.so
+7f4f5da78000-7f4f5dc78000 ---p 001c0000 fd:00 75497608                   /lib/x86_64-linux-gnu/libc-2.23.so
+7f4f5dc78000-7f4f5dc7c000 r--p 001c0000 fd:00 75497608                   /lib/x86_64-linux-gnu/libc-2.23.so
+7f4f5dc7c000-7f4f5dc7e000 rw-p 001c4000 fd:00 75497608                   /lib/x86_64-linux-gnu/libc-2.23.so
+7f4f5dc7e000-7f4f5dc82000 rw-p 00000000 00:00 0
+7f4f5dc82000-7f4f5dc86000 r-xp 00000000 fd:00 75497676                   /lib/x86_64-linux-gnu/libSegFault.so
+7f4f5dc86000-7f4f5de85000 ---p 00004000 fd:00 75497676                   /lib/x86_64-linux-gnu/libSegFault.so
+7f4f5de85000-7f4f5de86000 r--p 00003000 fd:00 75497676                   /lib/x86_64-linux-gnu/libSegFault.so
+7f4f5de86000-7f4f5de87000 rw-p 00004000 fd:00 75497676                   /lib/x86_64-linux-gnu/libSegFault.so
+7f4f5de87000-7f4f5dead000 r-xp 00000000 fd:00 75497570                   /lib/x86_64-linux-gnu/ld-2.23.so
+7f4f5e095000-7f4f5e098000 rw-p 00000000 00:00 0
+7f4f5e0ab000-7f4f5e0ac000 rw-p 00000000 00:00 0
+7f4f5e0ac000-7f4f5e0ad000 r--p 00025000 fd:00 75497570                   /lib/x86_64-linux-gnu/ld-2.23.so
+7f4f5e0ad000-7f4f5e0ae000 rw-p 00026000 fd:00 75497570                   /lib/x86_64-linux-gnu/ld-2.23.so
+7f4f5e0ae000-7f4f5e0af000 rw-p 00000000 00:00 0
+7fffb7061000-7fffb7082000 rw-p 00000000 00:00 0                          [stack]
+7fffb71ac000-7fffb71af000 r--p 00000000 00:00 0                          [vvar]
+7fffb71af000-7fffb71b1000 r-xp 00000000 00:00 0                          [vdso]
+ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]
+Segmentation fault (core dumped)
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&quot;coredumpを有効にする方法&quot;&gt;COREDUMPを有効にする方法&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Kernel
+    &lt;pre&gt;&lt;code&gt;CONFIG_ELF_CORE=y
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Userland
+    &lt;pre&gt;&lt;code&gt;ulimit -c unlimited
+echo 1 &amp;gt; /proc/sys/kernel/core_uses_pid
+echo &quot;/tmp/core-%e-%s-%u-%g-%p-%t&quot; &amp;gt; /proc/sys/kernel/core_pattern
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;参考：
+https://developer.toradex.com/knowledge-base/enable-and-analyze-coredumps-in-linux&lt;/p&gt;</content><author><name>Jianing Bi</name></author><category term="linux" /><summary type="html">libSegFault.so プリロードすると、プログラムが異常発生した時、の各種dumpしてくれる。 Source code int main(void) { char *ptr = (char*)0x10000000; memset(ptr, 0, 128); return 0; } 実行結果 export LD_PRELOAD=//lib/x86_64-linux-gnu/libSegFault.so ./memerr *** Segmentation fault Register dump: RAX: 0000000010000000 RBX: 0000000000000000 RCX: 0000000010000040 RDX: 0000000000000080 RSI: 0000000000000000 RDI: 0000000010000000 RBP: 00007fffb70800a0 R8 : 00000000004005d0 R9 : 00007f4f5de97ab0 R10: 000000000000034e R11: 00007f4f5d947240 R12: 0000000000400430 R13: 00007fffb7080180 R14: 0000000000000000 R15: 0000000000000000 RSP: 00007fffb7080088 RIP: 00007f4f5d947294 EFLAGS: 00010202 CS: 0033 FS: 0000 GS: 0000 Trap: 0000000e Error: 00000006 OldMask: 00000000 CR2: 10000000 FPUCW: 0000037f FPUSW: 00000000 TAG: 00000000 RIP: 00000000 RDP: 00000000 ST(0) 0000 0000000000000000 ST(1) 0000 0000000000000000 ST(2) 0000 0000000000000000 ST(3) 0000 0000000000000000 ST(4) 0000 0000000000000000 ST(5) 0000 0000000000000000 ST(6) 0000 0000000000000000 ST(7) 0000 0000000000000000 mxcsr: 1f80 XMM0: 00000000000000000000000000000000 XMM1: 00000000000000000000000000000000 XMM2: 00000000000000000000000000000000 XMM3: 00000000000000000000000000000000 XMM4: 00000000000000000000000000000000 XMM5: 00000000000000000000000000000000 XMM6: 00000000000000000000000000000000 XMM7: 00000000000000000000000000000000 XMM8: 00000000000000000000000000000000 XMM9: 00000000000000000000000000000000 XMM10: 00000000000000000000000000000000 XMM11: 00000000000000000000000000000000 XMM12: 00000000000000000000000000000000 XMM13: 00000000000000000000000000000000 XMM14: 00000000000000000000000000000000 XMM15: 00000000000000000000000000000000 Backtrace: /lib/x86_64-linux-gnu/libc.so.6(+0x8f294)[0x7f4f5d947294] ./memerr[0x40054c] /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf0)[0x7f4f5d8d8830] ./memerr[0x400459] Memory map: 00400000-00401000 r-xp 00000000 00:31 20437058 /misc/home/bjn/wk/test_code/memerr 00600000-00601000 r--p 00000000 00:31 20437058 /misc/home/bjn/wk/test_code/memerr 00601000-00602000 rw-p 00001000 00:31 20437058 /misc/home/bjn/wk/test_code/memerr 017d9000-017fa000 rw-p 00000000 00:00 0 [heap] 7f4f5d6a2000-7f4f5d6b8000 r-xp 00000000 fd:00 75497993 /lib/x86_64-linux-gnu/libgcc_s.so.1 7f4f5d6b8000-7f4f5d8b7000 ---p 00016000 fd:00 75497993 /lib/x86_64-linux-gnu/libgcc_s.so.1 7f4f5d8b7000-7f4f5d8b8000 rw-p 00015000 fd:00 75497993 /lib/x86_64-linux-gnu/libgcc_s.so.1 7f4f5d8b8000-7f4f5da78000 r-xp 00000000 fd:00 75497608 /lib/x86_64-linux-gnu/libc-2.23.so 7f4f5da78000-7f4f5dc78000 ---p 001c0000 fd:00 75497608 /lib/x86_64-linux-gnu/libc-2.23.so 7f4f5dc78000-7f4f5dc7c000 r--p 001c0000 fd:00 75497608 /lib/x86_64-linux-gnu/libc-2.23.so 7f4f5dc7c000-7f4f5dc7e000 rw-p 001c4000 fd:00 75497608 /lib/x86_64-linux-gnu/libc-2.23.so 7f4f5dc7e000-7f4f5dc82000 rw-p 00000000 00:00 0 7f4f5dc82000-7f4f5dc86000 r-xp 00000000 fd:00 75497676 /lib/x86_64-linux-gnu/libSegFault.so 7f4f5dc86000-7f4f5de85000 ---p 00004000 fd:00 75497676 /lib/x86_64-linux-gnu/libSegFault.so 7f4f5de85000-7f4f5de86000 r--p 00003000 fd:00 75497676 /lib/x86_64-linux-gnu/libSegFault.so 7f4f5de86000-7f4f5de87000 rw-p 00004000 fd:00 75497676 /lib/x86_64-linux-gnu/libSegFault.so 7f4f5de87000-7f4f5dead000 r-xp 00000000 fd:00 75497570 /lib/x86_64-linux-gnu/ld-2.23.so 7f4f5e095000-7f4f5e098000 rw-p 00000000 00:00 0 7f4f5e0ab000-7f4f5e0ac000 rw-p 00000000 00:00 0 7f4f5e0ac000-7f4f5e0ad000 r--p 00025000 fd:00 75497570 /lib/x86_64-linux-gnu/ld-2.23.so 7f4f5e0ad000-7f4f5e0ae000 rw-p 00026000 fd:00 75497570 /lib/x86_64-linux-gnu/ld-2.23.so 7f4f5e0ae000-7f4f5e0af000 rw-p 00000000 00:00 0 7fffb7061000-7fffb7082000 rw-p 00000000 00:00 0 [stack] 7fffb71ac000-7fffb71af000 r--p 00000000 00:00 0 [vvar] 7fffb71af000-7fffb71b1000 r-xp 00000000 00:00 0 [vdso] ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0 [vsyscall] Segmentation fault (core dumped) COREDUMPを有効にする方法 Kernel CONFIG_ELF_CORE=y Userland ulimit -c unlimited echo 1 &amp;gt; /proc/sys/kernel/core_uses_pid echo &quot;/tmp/core-%e-%s-%u-%g-%p-%t&quot; &amp;gt; /proc/sys/kernel/core_pattern 参考： https://developer.toradex.com/knowledge-base/enable-and-analyze-coredumps-in-linux</summary></entry><entry><title type="html">Kernel Perf</title><link href="http://bijianing.github.io/linux/kernel-perf.html" rel="alternate" type="text/html" title="Kernel Perf" /><published>2018-06-22T00:00:00+09:00</published><updated>2018-06-22T00:00:00+09:00</updated><id>http://bijianing.github.io/linux/kernel-perf</id><content type="html" xml:base="http://bijianing.github.io/linux/kernel-perf.html">&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#kernel-option&quot; id=&quot;markdown-toc-kernel-option&quot;&gt;Kernel Option&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#notices&quot; id=&quot;markdown-toc-notices&quot;&gt;Notices&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#perf-tools-build-option&quot; id=&quot;markdown-toc-perf-tools-build-option&quot;&gt;perf tools build option&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#flamegraph&quot; id=&quot;markdown-toc-flamegraph&quot;&gt;FlameGraph&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#prepare-flamegraph&quot; id=&quot;markdown-toc-prepare-flamegraph&quot;&gt;Prepare FlameGraph&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#get-performance-data-execute-in-target-system&quot; id=&quot;markdown-toc-get-performance-data-execute-in-target-system&quot;&gt;get performance data (execute in target system)&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#generate-flamegraph&quot; id=&quot;markdown-toc-generate-flamegraph&quot;&gt;Generate FlameGraph&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;kernel-option&quot;&gt;Kernel Option&lt;/h1&gt;
+&lt;p&gt;CONFIG_PERF_EVENTS
+General setup → Kernel Performance Events And Counters → Kernel performance events and counters&lt;/p&gt;
+
+&lt;h1 id=&quot;notices&quot;&gt;Notices&lt;/h1&gt;
+
+&lt;p&gt;タイマー周波数(Kernel Features → Timer frequency / CONFIG_HZ=1000)を1000HZにする（sample pointが少なくなるため）&lt;/p&gt;
+
+&lt;h1 id=&quot;perf-tools-build-option&quot;&gt;perf tools build option&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;EXTRA_CFLAGS=--sysroot=/home/.../output/host/arm-buildroot-linux-gnueabihf/sysroot make tools/perf&lt;/code&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;flamegraph&quot;&gt;FlameGraph&lt;/h1&gt;
+
+&lt;h3 id=&quot;prepare-flamegraph&quot;&gt;Prepare FlameGraph&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;code&gt;git clone https://github.com/brendangregg/FlameGraph&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;cd FlameGraph&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;get-performance-data-execute-in-target-system&quot;&gt;get performance data (execute in target system)&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;code&gt;perf record -a -F 999 -g -- iperf -c 192.168.137.2&lt;/code&gt; &lt;br /&gt;
+option &lt;code&gt;-a&lt;/code&gt; is important, this will make perf see the global environment.&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;perf script &amp;gt; iperf.script.bm25.send&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;scp iperf.script.bm25.send bjn@192.168.137.2:~/wk/FlameGraph/&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;generate-flamegraph&quot;&gt;Generate FlameGraph&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;code&gt;cat iperf.script.bm25.send | ./stackcollapse-perf.pl &amp;gt; out.iperf-folded.bm25.send&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;./flamegraph.pl out.iperf-folded.bm25.send  &amp;gt; iperf.bm25.send.svg&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;</content><author><name>Jianing Bi</name></author><category term="linux" /><category term="performance" /><category term="perf" /><category term="kernel" /><summary type="html">Kernel Option Notices perf tools build option FlameGraph Prepare FlameGraph get performance data (execute in target system) Generate FlameGraph Kernel Option CONFIG_PERF_EVENTS General setup → Kernel Performance Events And Counters → Kernel performance events and counters Notices タイマー周波数(Kernel Features → Timer frequency / CONFIG_HZ=1000)を1000HZにする（sample pointが少なくなるため） perf tools build option EXTRA_CFLAGS=--sysroot=/home/.../output/host/arm-buildroot-linux-gnueabihf/sysroot make tools/perf FlameGraph Prepare FlameGraph git clone https://github.com/brendangregg/FlameGraph cd FlameGraph get performance data (execute in target system) perf record -a -F 999 -g -- iperf -c 192.168.137.2 option -a is important, this will make perf see the global environment. perf script &amp;gt; iperf.script.bm25.send scp iperf.script.bm25.send bjn@192.168.137.2:~/wk/FlameGraph/ Generate FlameGraph cat iperf.script.bm25.send | ./stackcollapse-perf.pl &amp;gt; out.iperf-folded.bm25.send ./flamegraph.pl out.iperf-folded.bm25.send &amp;gt; iperf.bm25.send.svg</summary></entry><entry><title type="html">Pktgen</title><link href="http://bijianing.github.io/linux/pktgen.html" rel="alternate" type="text/html" title="Pktgen" /><published>2018-06-22T00:00:00+09:00</published><updated>2018-06-22T00:00:00+09:00</updated><id>http://bijianing.github.io/linux/pktgen</id><content type="html" xml:base="http://bijianing.github.io/linux/pktgen.html">&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#kernel-option&quot; id=&quot;markdown-toc-kernel-option&quot;&gt;Kernel Option&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#documents&quot; id=&quot;markdown-toc-documents&quot;&gt;Documents&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#used-commands&quot; id=&quot;markdown-toc-used-commands&quot;&gt;Used commands&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#start_xmit-stack-dump&quot; id=&quot;markdown-toc-start_xmit-stack-dump&quot;&gt;start_xmit stack dump&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;kernel-option&quot;&gt;Kernel Option&lt;/h1&gt;
+&lt;p&gt;Networking support → Networking options → Network testing → Packet Generator&lt;/p&gt;
+
+&lt;h1 id=&quot;documents&quot;&gt;Documents&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&quot;https://wiki.linuxfoundation.org/networking/pktgen&quot;&gt;Linux Foundation Wiki – pktgen&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.kernel.org/doc/Documentation/networking/pktgen.txt&quot;&gt;Kernel Documentation – pktgen&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;used-commands&quot;&gt;Used commands&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;echo &quot;min_pkt_size 1600&quot; &amp;gt; /proc/net/pktgen/wlan0
+echo &quot;max_pkt_size 1600&quot; &amp;gt; /proc/net/pktgen/wlan0
+echo &quot;min_pkt_size 1700&quot; &amp;gt; /proc/net/pktgen/wlan0
+echo &quot;max_pkt_size 1700&quot; &amp;gt; /proc/net/pktgen/wlan0
+echo &quot;start&quot; &amp;gt; /proc/net/pktgen/pgctrl
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&quot;start_xmit-stack-dump&quot;&gt;start_xmit stack dump&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;CPU: 0 PID: 47 Comm: kpktgend_0 Tainted: G        W  O    4.4.120-cip20+ #8
+Hardware name: Xacti-XZ01-CA72
+[&amp;lt;80016454&amp;gt;] (unwind_backtrace) from [&amp;lt;800130dc&amp;gt;] (show_stack+0x20/0x24)
+[&amp;lt;800130dc&amp;gt;] (show_stack) from [&amp;lt;802070c0&amp;gt;] (dump_stack+0x24/0x28)
+[&amp;lt;802070c0&amp;gt;] (dump_stack) from [&amp;lt;7f0061b0&amp;gt;] (dhd_start_xmit+0x38/0x354 [cywdhd])
+[&amp;lt;7f0061b0&amp;gt;] (dhd_start_xmit [cywdhd]) from [&amp;lt;803c6294&amp;gt;] (pktgen_thread_worker+0x2f4/0x19a8)
+[&amp;lt;803c6294&amp;gt;] (pktgen_thread_worker) from [&amp;lt;8003acec&amp;gt;] (kthread+0xe4/0xfc)
+[&amp;lt;8003acec&amp;gt;] (kthread) from [&amp;lt;8000faa0&amp;gt;] (ret_from_fork+0x14/0x34)
+&lt;/code&gt;&lt;/pre&gt;</content><author><name>Jianing Bi</name></author><category term="linux" /><category term="pktgen" /><category term="wlan" /><category term="network" /><summary type="html">Kernel Option Documents Used commands start_xmit stack dump Kernel Option Networking support → Networking options → Network testing → Packet Generator Documents Linux Foundation Wiki – pktgen Kernel Documentation – pktgen Used commands echo &quot;min_pkt_size 1600&quot; &amp;gt; /proc/net/pktgen/wlan0 echo &quot;max_pkt_size 1600&quot; &amp;gt; /proc/net/pktgen/wlan0 echo &quot;min_pkt_size 1700&quot; &amp;gt; /proc/net/pktgen/wlan0 echo &quot;max_pkt_size 1700&quot; &amp;gt; /proc/net/pktgen/wlan0 echo &quot;start&quot; &amp;gt; /proc/net/pktgen/pgctrl start_xmit stack dump CPU: 0 PID: 47 Comm: kpktgend_0 Tainted: G W O 4.4.120-cip20+ #8 Hardware name: Xacti-XZ01-CA72 [&amp;lt;80016454&amp;gt;] (unwind_backtrace) from [&amp;lt;800130dc&amp;gt;] (show_stack+0x20/0x24) [&amp;lt;800130dc&amp;gt;] (show_stack) from [&amp;lt;802070c0&amp;gt;] (dump_stack+0x24/0x28) [&amp;lt;802070c0&amp;gt;] (dump_stack) from [&amp;lt;7f0061b0&amp;gt;] (dhd_start_xmit+0x38/0x354 [cywdhd]) [&amp;lt;7f0061b0&amp;gt;] (dhd_start_xmit [cywdhd]) from [&amp;lt;803c6294&amp;gt;] (pktgen_thread_worker+0x2f4/0x19a8) [&amp;lt;803c6294&amp;gt;] (pktgen_thread_worker) from [&amp;lt;8003acec&amp;gt;] (kthread+0xe4/0xfc) [&amp;lt;8003acec&amp;gt;] (kthread) from [&amp;lt;8000faa0&amp;gt;] (ret_from_fork+0x14/0x34)</summary></entry><entry><title type="html">Iperf</title><link href="http://bijianing.github.io/linux/iperf.html" rel="alternate" type="text/html" title="Iperf" /><published>2018-04-09T00:00:00+09:00</published><updated>2018-04-09T00:00:00+09:00</updated><id>http://bijianing.github.io/linux/iperf</id><content type="html" xml:base="http://bijianing.github.io/linux/iperf.html">&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#send--receive&quot; id=&quot;markdown-toc-send--receive&quot;&gt;Send / Receive&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;send--receive&quot;&gt;Send / Receive&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/esnet/iperf/issues/480&quot;&gt;ref&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;client -&amp;gt; server
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;so when &lt;code&gt;iperf -c&lt;/code&gt;, the sending speed is tested.
+&lt;code&gt;iperf -s&lt;/code&gt;, the receiving speed is tested.&lt;/p&gt;</content><author><name>Jianing Bi</name></author><category term="linux" /><category term="wifi" /><category term="speed" /><category term="iperf" /><summary type="html">Send / Receive Send / Receive ref client -&amp;gt; server so when iperf -c, the sending speed is tested. iperf -s, the receiving speed is tested.</summary></entry><entry><title type="html">Git</title><link href="http://bijianing.github.io/linux/git.html" rel="alternate" type="text/html" title="Git" /><published>2018-04-04T00:00:00+09:00</published><updated>2018-04-04T00:00:00+09:00</updated><id>http://bijianing.github.io/linux/git</id><content type="html" xml:base="http://bijianing.github.io/linux/git.html">&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#reset&quot; id=&quot;markdown-toc-reset&quot;&gt;reset&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#checkout&quot; id=&quot;markdown-toc-checkout&quot;&gt;checkout&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#checkout-a-specific-file-to-a-specific-revision&quot; id=&quot;markdown-toc-checkout-a-specific-file-to-a-specific-revision&quot;&gt;checkout a specific file to a specific revision&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#log&quot; id=&quot;markdown-toc-log&quot;&gt;log&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#find-a-deleted-file-in-the-project-commit-history&quot; id=&quot;markdown-toc-find-a-deleted-file-in-the-project-commit-history&quot;&gt;find a deleted file in the project commit history?&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#clean&quot; id=&quot;markdown-toc-clean&quot;&gt;clean&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#options&quot; id=&quot;markdown-toc-options&quot;&gt;options&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#examples&quot; id=&quot;markdown-toc-examples&quot;&gt;examples&lt;/a&gt;        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#git-clean--fdx&quot; id=&quot;markdown-toc-git-clean--fdx&quot;&gt;git clean -fdx&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#git-clean--xf&quot; id=&quot;markdown-toc-git-clean--xf&quot;&gt;git clean -xf&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#git-clean--df&quot; id=&quot;markdown-toc-git-clean--df&quot;&gt;git clean -df&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;reset&quot;&gt;reset&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code&gt;--hard&lt;/code&gt;：「HEADの位置・インデックス・ワーキングツリー」全て&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;--mixed（or オプション無し）&lt;/code&gt;：「HEADの位置・インデックス」&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;--soft&lt;/code&gt;：「HEADの位置」のみ&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;checkout&quot;&gt;checkout&lt;/h1&gt;
+
+&lt;h2 id=&quot;checkout-a-specific-file-to-a-specific-revision&quot;&gt;checkout a specific file to a specific revision&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://stackoverflow.com/questions/215718/reset-or-revert-a-specific-file-to-a-specific-revision-using-git&quot;&gt;ref&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git checkout c5f567 -- file1/to/restore file2/to/restore
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&quot;log&quot;&gt;log&lt;/h1&gt;
+
+&lt;h2 id=&quot;find-a-deleted-file-in-the-project-commit-history&quot;&gt;find a deleted file in the project commit history?&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://stackoverflow.com/questions/7203515/git-how-to-find-a-deleted-file-in-the-project-commit-history&quot;&gt;ref&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git log --all --full-history -- **/thefile.*
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&quot;clean&quot;&gt;clean&lt;/h1&gt;
+
+&lt;h2 id=&quot;options&quot;&gt;options&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code&gt;-f, --force&lt;/code&gt;: If the Git configuration variable clean.requireForce is not set to false, git clean will refuse to delete files or directories unless given -f.&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;-x&lt;/code&gt;:  Git では通常無視されるファイルを削除します&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;-d&lt;/code&gt;:  カレントディレクトリ内の追跡対象外ファイルおよび追跡対象外ディレクトリを削除します。&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;-n, --dry-run&lt;/code&gt;: Don’t actually remove anything, just show what would be done.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;examples&quot;&gt;examples&lt;/h2&gt;
+
+&lt;h3 id=&quot;git-clean--fdx&quot;&gt;git clean -fdx&lt;/h3&gt;
+&lt;p&gt;カレントディレクトリ内の追跡対象外ファイルおよび追跡対象外ディレクトリ、および Git では通常無視されるファイルを削除します。&lt;br /&gt;
+&lt;code&gt;-n&lt;/code&gt;オプションをつける事で、削除されるファイル一覧を見る事もできます。&lt;/p&gt;
+
+&lt;h3 id=&quot;git-clean--xf&quot;&gt;git clean -xf&lt;/h3&gt;
+&lt;p&gt;カレントディレクトリ内の追跡対象外ファイルおよび Git では通常無視されるファイルを削除します。&lt;/p&gt;
+
+&lt;h3 id=&quot;git-clean--df&quot;&gt;git clean -df&lt;/h3&gt;
+&lt;p&gt;カレントディレクトリ内の追跡対象外ファイルおよび追跡対象外ディレクトリを削除します。&lt;/p&gt;</content><author><name>Jianing Bi</name></author><category term="linux" /><category term="git" /><summary type="html">reset checkout checkout a specific file to a specific revision log find a deleted file in the project commit history? clean options examples git clean -fdx git clean -xf git clean -df reset --hard：「HEADの位置・インデックス・ワーキングツリー」全て --mixed（or オプション無し）：「HEADの位置・インデックス」 --soft：「HEADの位置」のみ checkout checkout a specific file to a specific revision ref git checkout c5f567 -- file1/to/restore file2/to/restore log find a deleted file in the project commit history? ref git log --all --full-history -- **/thefile.* clean options -f, --force: If the Git configuration variable clean.requireForce is not set to false, git clean will refuse to delete files or directories unless given -f. -x: Git では通常無視されるファイルを削除します -d: カレントディレクトリ内の追跡対象外ファイルおよび追跡対象外ディレクトリを削除します。 -n, --dry-run: Don’t actually remove anything, just show what would be done. examples git clean -fdx カレントディレクトリ内の追跡対象外ファイルおよび追跡対象外ディレクトリ、および Git では通常無視されるファイルを削除します。 -nオプションをつける事で、削除されるファイル一覧を見る事もできます。 git clean -xf カレントディレクトリ内の追跡対象外ファイルおよび Git では通常無視されるファイルを削除します。 git clean -df カレントディレクトリ内の追跡対象外ファイルおよび追跡対象外ディレクトリを削除します。</summary></entry><entry><title type="html">Wpa Supplicant</title><link href="http://bijianing.github.io/linux/wpa-supplicant.html" rel="alternate" type="text/html" title="Wpa Supplicant" /><published>2018-03-30T00:00:00+09:00</published><updated>2018-03-30T00:00:00+09:00</updated><id>http://bijianing.github.io/linux/wpa-supplicant</id><content type="html" xml:base="http://bijianing.github.io/linux/wpa-supplicant.html">&lt;h1 id=&quot;reference&quot;&gt;Reference&lt;/h1&gt;
+&lt;p&gt;http://www.youchikurin.com/blog/2007/06/linuxlan_1.html&lt;/p&gt;
+
+&lt;h1 id=&quot;examples-認証方式--暗号方式&quot;&gt;Examples （認証方式 + 暗号方式）&lt;/h1&gt;
+
+&lt;h2 id=&quot;wpa-psk--tkip&quot;&gt;WPA-PSK  ＋　TKIP&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;network={
+ssid=&quot;myid&quot;
+proto=WPA
+key_mgmt=WPA-PSK
+pairwise=TKIP
+group=TKIP
+psk=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;wpa-psk--aes&quot;&gt;WPA-PSK  ＋　AES&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;network={
+ssid=&quot;myid&quot;
+proto=WPA
+key_mgmt=WPA-PSK
+pairwise=CCMP
+group=CCMP
+psk=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;wpa2-psk--tkip&quot;&gt;WPA2-PSK  ＋　TKIP&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;network={
+ssid=&quot;myid&quot;
+proto=RSN
+key_mgmt=WPA-PSK
+pairwise=TKIP
+group=TKIP
+psk=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;wpa2-psk--aes&quot;&gt;WPA2-PSK  ＋　AES&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;network={
+ssid=&quot;myid&quot;
+proto=RSN
+key_mgmt=WPA-PSK
+pairwise=CCMP
+group=CCMP
+psk=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;wep128&quot;&gt;WEP128&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;network={
+ssid=&quot;myid&quot;
+key_mgmt=NONE
+wep_key0=&quot;1234567890123&quot;
+wep_tx_keyidx=0
+}
+&lt;/code&gt;&lt;/pre&gt;</content><author><name>Jianing Bi</name></author><category term="linux" /><summary type="html">Reference http://www.youchikurin.com/blog/2007/06/linuxlan_1.html Examples （認証方式 + 暗号方式） WPA-PSK ＋　TKIP network={ ssid=&quot;myid&quot; proto=WPA key_mgmt=WPA-PSK pairwise=TKIP group=TKIP psk=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx } WPA-PSK ＋　AES network={ ssid=&quot;myid&quot; proto=WPA key_mgmt=WPA-PSK pairwise=CCMP group=CCMP psk=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx } WPA2-PSK ＋　TKIP network={ ssid=&quot;myid&quot; proto=RSN key_mgmt=WPA-PSK pairwise=TKIP group=TKIP psk=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx } WPA2-PSK ＋　AES network={ ssid=&quot;myid&quot; proto=RSN key_mgmt=WPA-PSK pairwise=CCMP group=CCMP psk=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx } WEP128 network={ ssid=&quot;myid&quot; key_mgmt=NONE wep_key0=&quot;1234567890123&quot; wep_tx_keyidx=0 }</summary></entry></feed>

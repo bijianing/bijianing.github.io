@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ubuntu Settings - Notes ...</title>
+
+    <link rel="shortcut icon" href="/styles/images/favicon.jpg">
+    <link rel="icon" href="/styles/images/favicon.jpg">
+
+    <link rel="stylesheet" href="/assets/css/wordpress.css">
+    <link rel="canonical" href="/linux/ubuntu-settings.html">
+
+    <link rel="stylesheet" href="/assets/prism/prism.css">
+    <script src="/assets/prism/prism.js"></script>
+    <script src="https://kit.fontawesome.com/45a69050db.js" crossorigin="anonymous"></script>
+
+    <meta name="keywords" content="Ubuntu Settings, Notes ..., 学而不思则罔;思而不学则殆;生命不止;折腾不休">
+    <meta name="description" content="学而不思则罔;思而不学则殆;生命不止;折腾不休">
+</head>
+
+<body class="index">
+    <header id="header" itemscope="" itemtype="https://schema.org/WPHeader">
+    <div id="head-in">
+        <div id="head-parallax" style="overflow: hidden; background-position: 0px 0px;">
+            <div class="head-cover" style="transform: translate(0px, 0px);">
+                <div class="info" itemscope="" itemtype="https://schema.org/Website">
+                    <h1 id="sitename">
+                        <a href="/" itemprop="url"><img src="/assets/images/logo.svg" alt="" width="150" height="150" class="onepoint" itemprop="image" sizes="(max-width: 150px) 100vw, 150px"><span itemprop="name about">Linux Ref</span></a>
+                    </h1>
+                    <meta itemprop="alternativeHeadline" content="Linux tutorials, settings etc.">
+                </div>
+                <!--/.info-->
+            </div>
+            <!--/.head-cover-->
+        </div>
+        <!--/#head-parallax-->
+    </div>
+</header>
+    <div class="container">
+        
+
+<div itemprop="breadcrumb">
+    <ol id="breadcrumb">
+        <li>
+            <i class="fas fa-home"></i>
+            <a href="/">ホーム</a>
+            <i class="arrow">&gt;</i>
+        </li>
+        
+        
+        
+            
+            
+            
+
+
+
+
+
+<li>
+
+<i class="fas fa-folder-open"></i>
+<a href="/category/linux/">Linux</a>
+
+</li>
+
+    </ol>
+</div>
+<!-- 
+    <div>value of name listsize:1</div>
+    <div>value of href listsize:1</div>
+    <div>value of count:0</div>
+    
+    <div>value of i:0</div>
+    
+     -->
+<div id="primary" class="clearfix">
+    <main id="main">
+        <article>
+            <div id="core" class="grid">
+                <div itemprop="mainEntityOfPage" id="mainEntity" class="post post-109 type-post status-publish format-standard has-post-thumbnail hentry category-server tag-debian tag-linux tag-omv tag-openmediavault tag-server tag-wordpress ja">
+                    <header id="article-header">
+                        <h1 class="entry-title" itemprop="headline name">Ubuntu Settings</h1>
+                    </header>
+                    <div class="clearfix">
+                        <p class="meta">
+                            <i class="far fa-clock"></i>
+                            <span class="date published">
+                                <time class="entry-date updated" datetime="2020-06-25T00:00:00+09:00" itemprop="datePublished">
+                                    25 Jun 2020
+                                </time>
+                            </span>
+                            <i class="fas fa-redo-alt"></i>
+                            <span class="date">
+                                <meta itemprop="dateModified" content="2020-08-23T17:24:54+09:00">
+                                DUMMY STRING
+                            </span>
+                        </p>
+                        <div id="toc_container">
+<span class="toc_title">Contents</span><input id="toc_toggle" type="checkbox" checked><label class="toc_toggle" for="toc_toggle"></label>
+                            <ul id="" class="toc_list">
+<li class=" toc-h1"><a href="#ubuntu-mouse-not-work-after-resume-from-sleep">Ubuntu mouse not work after resume from sleep</a></li>
+<li class=" toc-h1"><a href="#air-capture-form-ubuntu">Air capture form Ubuntu</a></li>
+<li class=" toc-h1"><a href="#action-when-close-lid">Action when close lid</a></li>
+<li class=" toc-h1"><a href="#systemd-in-ubuntu">systemd in Ubuntu</a></li>
+<li class=" toc-h1"><a href="#update-kernel-manually">Update Kernel manually</a></li>
+</ul>
+                        </div>
+                        <p>About Ubuntu’s Settings memo</p>
+
+<!-- more -->
+
+<h1 id="ubuntu-mouse-not-work-after-resume-from-sleep">Ubuntu mouse not work after resume from sleep</h1>
+
+<ol>
+  <li>Make sure your device module is psmouse by running,
+    <pre><code class="line-numbers">lsmod | grep psmouse
+</code></pre>
+    <p>if its not, find the relavant module name.</p>
+  </li>
+  <li>create script for resume from sleep
+    <pre><code class="line-numbers">$ cd /lib/systemd/system-sleep/
+$ sudo vi fixtouchpad
+</code></pre>
+  </li>
+  <li>then paste and save the following
+    <pre><code class="line-numbers">#!/bin/bash
+[ "$1" = "post" ] &amp;&amp; exec modprobe psmouse
+[ "$1" = "pre" ] &amp;&amp; exec rmmod psmouse
+exit 0
+</code></pre>
+    <p>This will reload your psmouse module after resuming. Replace ‘psmouse’ with your module name.</p>
+  </li>
+  <li>Be sure to make the script executable
+    <pre><code class="line-numbers">sudo chmod +x fixtouchpad
+</code></pre>
+  </li>
+</ol>
+
+<h1 id="air-capture-form-ubuntu">Air capture form Ubuntu</h1>
+
+<ol>
+  <li>disable network manager
+    <pre><code class="line-numbers">sudo systemctl stop NetworkManager
+</code></pre>
+  </li>
+  <li>create network interface
+    <pre><code class="line-numbers">sudo iw phy phy0 interface add wlanmon0 type monitor
+sudo ifconfig wlanmon0 up
+</code></pre>
+  </li>
+  <li>change channel
+    <pre><code class="line-numbers">sudo iwconfig wlanmon0 channel 11
+</code></pre>
+  </li>
+</ol>
+
+<h1 id="action-when-close-lid">Action when close lid</h1>
+
+<ol>
+  <li>Change <code>HandleLidSwitch</code> in <code>/etc/systemd/logind.conf</code>
+    <pre><code class="line-numbers">sudo vi sudo gedit /etc/systemd/logind.conf
+</code></pre>
+    <ul>
+      <li>
+<code>HandleLidSwitch=lock</code> – lock when lid closed.</li>
+      <li>
+<code>HandleLidSwitch=ignore</code> – do nothing.</li>
+      <li>
+<code>HandleLidSwitch=poweroff</code> – shutdown.</li>
+      <li>
+<code>HandleLidSwitch=hibernate</code> – hibernate Ubuntu.</li>
+    </ul>
+  </li>
+  <li>Restart logind
+    <pre><code class="line-numbers">sudo systemctl restart systemd-logind
+</code></pre>
+  </li>
+</ol>
+
+<h1 id="systemd-in-ubuntu">systemd in Ubuntu</h1>
+
+<p>reference:</p>
+<ul>
+  <li>Ubuntu man page <a href="http://manpages.ubuntu.com/manpages/cosmic/man5/systemd.service.5.html">systemd.service</a>
+</li>
+  <li>Ubuntu man page <a href="http://manpages.ubuntu.com/manpages/cosmic/man5/systemd.exec.5.html">systemd.exec</a>
+</li>
+</ul>
+
+<p><code>systemd</code> is a manage system for system service. including the action: start/stop/restart, auto start etc.</p>
+
+<ol>
+  <li>Concept
+    <ul>
+      <li>
+<code>Unit File</code><br>
+The file define the service which locate at <code>/etc/systemd/system</code> or <code>/lib/systemd/system</code>
+        <ul>
+          <li>
+<code>/etc/systemd/system</code>: administrator change setting in this directory</li>
+          <li>
+<code>/lib/systemd/system</code>: default system settings</li>
+        </ul>
+      </li>
+      <li>
+<code>Environment File</code><br>
+The file define Environment variables for <code>Unit File</code>.<br>
+Specify the <code>Environment File</code> in <code>Unit File</code> with <code>EnvironmentFile=/path/to/file</code>.<br>
+The location of <code>Environment File</code> often in <code>/etc/default/*</code>
+</li>
+      <li>
+<code>systemctl</code> command<br>
+The command manage services. start / stop / restart etc.</li>
+    </ul>
+  </li>
+  <li>
+<code>Unit File</code>
+    <ul>
+      <li>example
+        <pre><code class="line-numbers">  [Unit]
+  Description=Start Jekyll server for bijianing.github.io
+
+  [Service]
+  Type=simple
+  EnvironmentFile=/etc/default/jekyll.bijianing.github.io
+  ExecStart=ruby $JEKYLL server -s $SRCDIR -d $DSTDIR $JEKYLL_OPTS
+  ExecStop=kill -INT $MAINPID
+
+  [Install]
+  WantedBy = multi-user.target
+</code></pre>
+      </li>
+    </ul>
+  </li>
+  <li>
+<code>systemctl</code> command
+    <ul>
+      <li>
+<code>sudo systemctl daemon-reload</code><br>
+  reload configurations of all units</li>
+      <li>
+<code>sudo systemctl [start | stop | restart] unit</code><br>
+  start / stop / restart unit</li>
+      <li>
+<code>sudo systemctl status unit</code><br>
+  show status of unit
+  start / stop / restart unit</li>
+    </ul>
+  </li>
+</ol>
+
+<h1 id="update-kernel-manually">Update Kernel manually</h1>
+
+<ul>
+  <li>reference<br>
+<a href="https://gihyo.jp/admin/serial/01/ubuntu-recipe/0526?page=2">Ubuntuで最新のカーネルをお手軽にビルドする方法</a>
+</li>
+  <li>build kernel need 30GB disk space, So I used USB HDD(80GB)</li>
+</ul>
+
+<ol>
+  <li>Install necessary packages
+    <pre><code class="line-numbers">sudo apt install git ccache fakeroot libncurses5-dev
+sudo apt build-dep linux
+</code></pre>
+  </li>
+  <li>Download source code
+    <pre><code class="line-numbers">git clone https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+cd linux
+</code></pre>
+  </li>
+  <li>Prepare config file
+    <pre><code class="line-numbers">mkdir ../build
+cp /boot/config-`uname -r` ../build/.config
+scripts/config --file ../build/.config --disable DEBUG_INFO
+make O=../build/ olddefconfig
+</code></pre>
+  </li>
+  <li>Build kernel and modules
+    <pre><code class="line-numbers">time make -j9 O=../build/ LOCALVERSION=-stock
+time make modules -j9 O=../build/ LOCALVERSION=-stock
+</code></pre>
+  </li>
+  <li>Create and install packages for Ubuntu
+    <pre><code class="line-numbers">make bindeb-pkg O=../build/ LOCALVERSION=-stock
+sudo apt install ../*.deb
+</code></pre>
+  </li>
+</ol>
+
+
+                    </div>
+                </div>
+            </div>
+        </article>
+    </main>
+    <div id="sidebar" itemscope="itemscope" itemtype="http://schema.org/WPSideBar" style="min-height: 298px;">
+    <div id="side">
+        <aside>
+            <div id="side-fixed">
+                <div id="categories-4" class="widget widget_categories">
+                    <h3 class="side-title">カテゴリー</h3>
+
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="/category/linux">Linux(19)</a>
+                            
+                        </li>
+                        
+                        <li>
+                            <a href="/category/shell">シェル(1)</a>
+                            
+                        </li>
+                        
+                        <li>
+                            <a href="/category/network">ネットワーク(1)</a>
+                            
+                        </li>
+                        
+                        <li>
+                            <a href="/category/site">Web関連(2)</a>
+                            
+                        </li>
+                        
+                        <li>
+                            <a href="/category/subcat1">サブカテゴリ１(3)</a>
+                            
+                            <ul>
+                                
+                                <li>
+                                    <a href="/category/subcat1/subcat2">subcat2(2)</a>
+                                    
+                                    <ul>
+                                        
+                                        <li>
+                                            <a href="/category/subcat1/subcat2/subcat3">subcat3(1)</a>
+                                            
+                                        </li>
+                                        
+                                    </ul>
+                                    
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                    </ul>
+                </div>
+                <div id="search-4" class="widget widget_search">
+                    <h3 class="side-title">検索</h3>
+                    <div id="search" itemscope="" itemtype="https://schema.org/WebSite">
+                        <meta itemprop="url" content="https://linuxref.net/">
+                        <form itemprop="potentialAction" itemscope="" itemtype="https://schema.org/SearchAction" method="get" class="search-form" action="https://linuxref.net/">
+                            <meta itemprop="target" content="https://linuxref.net/?s={s}">
+<label><input itemprop="query-input" type="search" class="search-field" placeholder="  サイト内検索" value="" name="s" title="サイト内検索" required=""></label><input type="submit" class="search-submit" value="検索">
+                        </form>
+                    </div>
+                </div>
+                <div id="search-4" class="widget widget_search">
+                    <h3 class="side-title">Debug</h3>
+
+                    <div>site.data.a(level):</div>
+                    <div>site.data.b(level):</div>
+                    <div>site.data.c(level):</div>
+                    <div>site.data.d(level):</div>
+                    <div>page.data[category]:linux</div>
+                    <div>page.data[newdata]:</div>
+
+                </div>
+            </div>
+        </aside>
+    </div>
+    <!--/#side-->
+</div>
+</div>
+    </div>
+    <div id="footer" itemscope="" itemtype="https://schema.org/WPFooter">
+    <footer>
+        <div id="copyright">
+            <p class="copy">Copyright © <span itemprop="copyrightYear">2021</span> <span itemprop="copyrightHolder name">Jianing Bi</span> All Rights Reserved.</p>
+        </div>
+    </footer>
+</div>
+</body>
+
+</html>

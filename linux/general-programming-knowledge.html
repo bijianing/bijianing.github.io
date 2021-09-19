@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>General Programming Knowledge - Notes ...</title>
+
+    <link rel="shortcut icon" href="/styles/images/favicon.jpg">
+    <link rel="icon" href="/styles/images/favicon.jpg">
+
+    <link rel="stylesheet" href="/assets/css/wordpress.css">
+    <link rel="canonical" href="/linux/general-programming-knowledge.html">
+
+    <link rel="stylesheet" href="/assets/prism/prism.css">
+    <script src="/assets/prism/prism.js"></script>
+    <script src="https://kit.fontawesome.com/45a69050db.js" crossorigin="anonymous"></script>
+
+    <meta name="keywords" content="General Programming Knowledge, Notes ..., 学而不思则罔;思而不学则殆;生命不止;折腾不休">
+    <meta name="description" content="学而不思则罔;思而不学则殆;生命不止;折腾不休">
+</head>
+
+<body class="index">
+    <header id="header" itemscope="" itemtype="https://schema.org/WPHeader">
+    <div id="head-in">
+        <div id="head-parallax" style="overflow: hidden; background-position: 0px 0px;">
+            <div class="head-cover" style="transform: translate(0px, 0px);">
+                <div class="info" itemscope="" itemtype="https://schema.org/Website">
+                    <h1 id="sitename">
+                        <a href="/" itemprop="url"><img src="/assets/images/logo.svg" alt="" width="150" height="150" class="onepoint" itemprop="image" sizes="(max-width: 150px) 100vw, 150px"><span itemprop="name about">Linux Ref</span></a>
+                    </h1>
+                    <meta itemprop="alternativeHeadline" content="Linux tutorials, settings etc.">
+                </div>
+                <!--/.info-->
+            </div>
+            <!--/.head-cover-->
+        </div>
+        <!--/#head-parallax-->
+    </div>
+</header>
+    <div class="container">
+        
+
+<div itemprop="breadcrumb">
+    <ol id="breadcrumb">
+        <li>
+            <i class="fas fa-home"></i>
+            <a href="/">ホーム</a>
+            <i class="arrow">&gt;</i>
+        </li>
+        
+        
+        
+            
+            
+            
+
+
+
+
+
+<li>
+
+<i class="fas fa-folder-open"></i>
+<a href="/category/linux/">Linux</a>
+
+</li>
+
+    </ol>
+</div>
+<!-- 
+    <div>value of name listsize:1</div>
+    <div>value of href listsize:1</div>
+    <div>value of count:0</div>
+    
+    <div>value of i:0</div>
+    
+     -->
+<div id="primary" class="clearfix">
+    <main id="main">
+        <article>
+            <div id="core" class="grid">
+                <div itemprop="mainEntityOfPage" id="mainEntity" class="post post-109 type-post status-publish format-standard has-post-thumbnail hentry category-server tag-debian tag-linux tag-omv tag-openmediavault tag-server tag-wordpress ja">
+                    <header id="article-header">
+                        <h1 class="entry-title" itemprop="headline name">General Programming Knowledge</h1>
+                    </header>
+                    <div class="clearfix">
+                        <p class="meta">
+                            <i class="far fa-clock"></i>
+                            <span class="date published">
+                                <time class="entry-date updated" datetime="2018-02-16T10:33:04+09:00" itemprop="datePublished">
+                                    16 Feb 2018
+                                </time>
+                            </span>
+                            <i class="fas fa-redo-alt"></i>
+                            <span class="date">
+                                <meta itemprop="dateModified" content="2020-08-23T17:24:54+09:00">
+                                DUMMY STRING
+                            </span>
+                        </p>
+                        <div id="toc_container">
+<span class="toc_title">Contents</span><input id="toc_toggle" type="checkbox" checked><label class="toc_toggle" for="toc_toggle"></label>
+                            <ul id="" class="toc_list">
+<li class=" toc-h1">
+<a href="#autotools">Autotools</a>
+<ul>
+<li class=" toc-h2"><a href="#references">References</a></li>
+<li class=" toc-h2"><a href="#overall-description">Overall description</a></li>
+<li class=" toc-h2"><a href="#regenerating-autotools-files-autoreconf">Regenerating autotools files: autoreconf</a></li>
+<li class=" toc-h2"><a href="#configureac-language">configure.ac language</a></li>
+<li class=" toc-h2"><a href="#some-macros">Some Macros</a></li>
+<li class=" toc-h2"><a href="#output-variables">Output variables</a></li>
+</ul>
+</li>
+</ul>
+                        </div>
+                        <ul id="markdown-toc">
+  <li>
+<a href="#autotools" id="markdown-toc-autotools">Autotools</a>    <ul>
+      <li><a href="#references" id="markdown-toc-references">References</a></li>
+      <li><a href="#overall-description" id="markdown-toc-overall-description">Overall description</a></li>
+      <li><a href="#regenerating-autotools-files-autoreconf" id="markdown-toc-regenerating-autotools-files-autoreconf">Regenerating autotools files: autoreconf</a></li>
+      <li><a href="#configureac-language" id="markdown-toc-configureac-language">configure.ac language</a></li>
+      <li><a href="#some-macros" id="markdown-toc-some-macros">Some Macros</a></li>
+      <li><a href="#output-variables" id="markdown-toc-output-variables">Output variables</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="autotools">Autotools</h1>
+
+<p>Also known as <code>GNU Build System</code>.
+Well descripted at <a href="https://en.wikipedia.org/wiki/GNU_Build_System">Wiki</a></p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li><a href="https://www.gnu.org/software/autoconf/manual/html_node/index.html">Autoconf Manual</a></li>
+  <li><a href="https://www.gnu.org/software/automake/manual/automake.html">Automake Manual</a></li>
+  <li><a href="https://events.static.linuxfound.org/sites/events/files/slides/petazzoni-autotools-tutorial.pdf">petazzoni-autotools-tutorial.pdf</a></li>
+</ul>
+
+<h2 id="overall-description">Overall description</h2>
+
+<ul>
+  <li>
+    <p>Flow diagram of autoconf and automake: original image is <a href="https://upload.wikimedia.org/wikipedia/commons/8/84/Autoconf-automake-process.svg">here</a> <br>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Autoconf-automake-process.svg/400px-Autoconf-automake-process.svg.png" alt="Flow diagram of autoconf and automake"></p>
+  </li>
+  <li>
+    <p>Overall organization from <a href="https://events.static.linuxfound.org/sites/events/files/slides/petazzoni-autotools-tutorial.pdf">petazzoni-autotools-tutorial.pdf</a> 
+original image is <a href="images/autotools_overall.png">here</a>  <br>
+  <img src="images/autotools_overall.png" style="width:100%"></p>
+  </li>
+</ul>
+
+<h2 id="regenerating-autotools-files-autoreconf">Regenerating autotools files: autoreconf</h2>
+
+<ul>
+  <li>To generate all the files used by autotools, you could call automake, autoconf, aclocal, autoheader, etc. manually.
+    <ul>
+      <li>But it is not very easy and efficient.</li>
+    </ul>
+  </li>
+  <li>A tool called autoreconf automates this process
+    <ul>
+      <li>Useful option: -i or –install, to ask autoreconf to copy missing auxiliary files</li>
+    </ul>
+  </li>
+  <li>Always use autoreconf!</li>
+</ul>
+
+<h2 id="configureac-language">configure.ac language</h2>
+
+<ul>
+  <li>configure.ac is a shell script.</li>
+  <li>it used to be named configure.in but this name is now deprecated</li>
+  <li>Processed through the m4 preprocessor</li>
+  <li>Shell script augmented with special constructs for portability:
+    <ul>
+      <li>
+<code>AS_IF</code> instead of shell <code>if ... then .. fi</code>
+</li>
+      <li>
+<code>AS_CASE</code> instead of shell <code>case ... esac</code>
+</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="some-macros">Some Macros</h2>
+
+<ul>
+  <li>
+<code>AC_INIT(package, version, [bug-report], [tarname], [url])</code>
+    <ul>
+      <li>Every conﬁgure script must call AC_INIT before doing anything else that produces output.</li>
+    </ul>
+  </li>
+  <li>
+<code>AC_OUTPUT</code>
+    <ul>
+      <li>Every configure.ac, should ﬁnish by calling AC_OUTPUT.</li>
+      <li>Generates and runs config.status, which in turn creates the makeﬁles and any
+other ﬁles resulting from conﬁguration.</li>
+    </ul>
+  </li>
+  <li>
+<code>AC_PREREQ</code>
+    <ul>
+      <li>Veriﬁes that a recent enough version of autoconf is used</li>
+    </ul>
+  </li>
+  <li>
+<code>AC_PROG_CC, AC_PROG_CXX, AC_PROG_AWK, AC_PROG_GREP, AC_PROG_LEX, AC_PROG_YACC</code>
+    <ul>
+      <li>makes sure a compiler, awk, grep, etc. is available</li>
+    </ul>
+  </li>
+  <li>
+<code>AC_CONFIG_FILES (file..., [cmds], [init-cmds])</code>
+    <ul>
+      <li>Make AC_OUTPUT create each file by copying an input <code>file</code> (by default <code>file.in</code>),
+substituting the output variable values.</li>
+      <li>Example: <code>AC_CONFIG_FILES([Makefile src/Makefile])</code>
+</li>
+    </ul>
+  </li>
+  <li>Many other macros in <a href="https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.69/html_node/Existing-Tests.html#Existing-Tests">Manual</a>
+</li>
+</ul>
+
+<h2 id="output-variables">Output variables</h2>
+
+<ul>
+  <li>autoconf will replace <code>@variable@</code> constructs by the appropriate values in files listed in <code>AC_CONFIG_FILES</code>
+</li>
+  <li>Long list of standard variables replaced by autoconf</li>
+  <li>Additional shell variables declared in configure.ac can be replaced using <code>AC_SUBST</code>
+    <ul>
+      <li>The following three examples are equivalent:
+        <pre><code class="line-numbers">AC_SUBST([FOO], [42])
+</code></pre>
+        <pre><code class="line-numbers">FOO=42
+AC_SUBST([FOO])
+</code></pre>
+        <pre><code class="line-numbers">AC_SUBST([FOO])
+FOO=42
+</code></pre>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+
+                    </div>
+                </div>
+            </div>
+        </article>
+    </main>
+    <div id="sidebar" itemscope="itemscope" itemtype="http://schema.org/WPSideBar" style="min-height: 298px;">
+    <div id="side">
+        <aside>
+            <div id="side-fixed">
+                <div id="categories-4" class="widget widget_categories">
+                    <h3 class="side-title">カテゴリー</h3>
+
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="/category/linux">Linux(19)</a>
+                            
+                        </li>
+                        
+                        <li>
+                            <a href="/category/shell">シェル(1)</a>
+                            
+                        </li>
+                        
+                        <li>
+                            <a href="/category/network">ネットワーク(1)</a>
+                            
+                        </li>
+                        
+                        <li>
+                            <a href="/category/site">Web関連(2)</a>
+                            
+                        </li>
+                        
+                        <li>
+                            <a href="/category/subcat1">サブカテゴリ１(3)</a>
+                            
+                            <ul>
+                                
+                                <li>
+                                    <a href="/category/subcat1/subcat2">subcat2(2)</a>
+                                    
+                                    <ul>
+                                        
+                                        <li>
+                                            <a href="/category/subcat1/subcat2/subcat3">subcat3(1)</a>
+                                            
+                                        </li>
+                                        
+                                    </ul>
+                                    
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                    </ul>
+                </div>
+                <div id="search-4" class="widget widget_search">
+                    <h3 class="side-title">検索</h3>
+                    <div id="search" itemscope="" itemtype="https://schema.org/WebSite">
+                        <meta itemprop="url" content="https://linuxref.net/">
+                        <form itemprop="potentialAction" itemscope="" itemtype="https://schema.org/SearchAction" method="get" class="search-form" action="https://linuxref.net/">
+                            <meta itemprop="target" content="https://linuxref.net/?s={s}">
+<label><input itemprop="query-input" type="search" class="search-field" placeholder="  サイト内検索" value="" name="s" title="サイト内検索" required=""></label><input type="submit" class="search-submit" value="検索">
+                        </form>
+                    </div>
+                </div>
+                <div id="search-4" class="widget widget_search">
+                    <h3 class="side-title">Debug</h3>
+
+                    <div>site.data.a(level):</div>
+                    <div>site.data.b(level):</div>
+                    <div>site.data.c(level):</div>
+                    <div>site.data.d(level):</div>
+                    <div>page.data[category]:linux</div>
+                    <div>page.data[newdata]:</div>
+
+                </div>
+            </div>
+        </aside>
+    </div>
+    <!--/#side-->
+</div>
+</div>
+    </div>
+    <div id="footer" itemscope="" itemtype="https://schema.org/WPFooter">
+    <footer>
+        <div id="copyright">
+            <p class="copy">Copyright © <span itemprop="copyrightYear">2021</span> <span itemprop="copyrightHolder name">Jianing Bi</span> All Rights Reserved.</p>
+        </div>
+    </footer>
+</div>
+</body>
+
+</html>

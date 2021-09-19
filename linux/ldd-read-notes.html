@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LDD read notes - Notes ...</title>
+
+    <link rel="shortcut icon" href="/styles/images/favicon.jpg">
+    <link rel="icon" href="/styles/images/favicon.jpg">
+
+    <link rel="stylesheet" href="/assets/css/wordpress.css">
+    <link rel="canonical" href="/linux/ldd-read-notes.html">
+
+    <link rel="stylesheet" href="/assets/prism/prism.css">
+    <script src="/assets/prism/prism.js"></script>
+    <script src="https://kit.fontawesome.com/45a69050db.js" crossorigin="anonymous"></script>
+
+    <meta name="keywords" content="LDD read notes, Notes ..., 学而不思则罔;思而不学则殆;生命不止;折腾不休">
+    <meta name="description" content="学而不思则罔;思而不学则殆;生命不止;折腾不休">
+</head>
+
+<body class="index">
+    <header id="header" itemscope="" itemtype="https://schema.org/WPHeader">
+    <div id="head-in">
+        <div id="head-parallax" style="overflow: hidden; background-position: 0px 0px;">
+            <div class="head-cover" style="transform: translate(0px, 0px);">
+                <div class="info" itemscope="" itemtype="https://schema.org/Website">
+                    <h1 id="sitename">
+                        <a href="/" itemprop="url"><img src="/assets/images/logo.svg" alt="" width="150" height="150"
+                                class="onepoint" itemprop="image" sizes="(max-width: 150px) 100vw, 150px"><span
+                                itemprop="name about">Linux Ref</span></a>
+                    </h1>
+                    <meta itemprop="alternativeHeadline" content="Linux tutorials, settings etc.">
+                </div>
+                <!--/.info-->
+            </div>
+            <!--/.head-cover-->
+        </div>
+        <!--/#head-parallax-->
+    </div>
+</header>
+    <div class="container">
+        
+
+<div itemprop="breadcrumb">
+    <ol id="breadcrumb">
+        <li>
+            <i class="fas fa-home"></i>
+            <a href="/">ホーム</a>
+            <i class="arrow">&gt;</i>
+        </li>
+        
+        
+        
+            
+            
+            
+
+
+
+
+
+<li>
+
+<i class="fas fa-folder-open"></i>
+<a href="/category/linux/">Linux</a>
+
+</li>
+
+    </ol>
+</div>
+<!-- 
+    <div>value of name listsize:1</div>
+    <div>value of href listsize:1</div>
+    <div>value of count:0</div>
+    
+    <div>value of i:0</div>
+    
+     -->
+<div id="primary" class="clearfix">
+    <main id="main">
+        <article>
+            <div id="core" class="grid">
+                <div itemprop="mainEntityOfPage" id="mainEntity"
+                    class="post post-109 type-post status-publish format-standard has-post-thumbnail hentry category-server tag-debian tag-linux tag-omv tag-openmediavault tag-server tag-wordpress ja">
+                    <header id="article-header">
+                        <h1 class="entry-title" itemprop="headline name">LDD read notes</h1>
+                    </header>
+                    <div class="clearfix">
+                        <p class="meta">
+                            <i class="far fa-clock"></i>
+                            <span class="date published">
+                                <time class="entry-date updated" datetime="2018-02-05T11:47:44+09:00"
+                                    itemprop="datePublished">
+                                    05 Feb 2018
+                                </time>
+                            </span>
+                            <i class="fas fa-redo-alt"></i>
+                            <span class="date">
+                                <meta itemprop="dateModified" content="2020-08-23T17:24:54+09:00">
+                                DUMMY STRING
+                            </span>
+                        </p>
+                        <div id="toc_container"><span class="toc_title">Contents</span><input id="toc_toggle"
+                                type="checkbox" checked="checked"><label class="toc_toggle" for="toc_toggle"></label>
+                            <ul id="" class="toc_list">
+<li class=" toc-h2"><a href="#chapter-3-char-drivers">Chapter 3 Char Drivers</a>
+<ul>
+<li class=" toc-h3"><a href="#the-internal-representation-of-device-numbers">The Internal Representation of Device Numbers</a></li>
+<li class=" toc-h3"><a href="#allocating-and-freeing-device-numbers">Allocating and Freeing Device Numbers</a></li>
+</ul>
+</li>
+</ul>
+                        </div>
+                        <h2 id="chapter-3-char-drivers">Chapter 3 Char Drivers</h2>
+<hr />
+
+<h3 id="the-internal-representation-of-device-numbers">The Internal Representation of Device Numbers</h3>
+
+<ul>
+  <li>
+    <p><code>&lt;linux/kdev_t.h&gt;</code> Header</p>
+  </li>
+  <li>
+    <p><code>dev_t</code> in Kernel 2.6.0, 32-bit, 12-bit major number, 20-bit minor number.</p>
+  </li>
+  <li>
+    <p><code>MAJOR(dev_t dev);</code></p>
+  </li>
+  <li>
+    <p><code>MINOR(dev_t dev);</code></p>
+  </li>
+  <li>
+    <p><code>MKDEV(int major, int minor);</code></p>
+  </li>
+</ul>
+
+<h3 id="allocating-and-freeing-device-numbers">Allocating and Freeing Device Numbers</h3>
+
+<ul>
+  <li>
+    <p><code>int register_chrdev_region(dev_t first, unsigned int count, char *name);</code><br />
+  alloc a range of device number from first to first + count.</p>
+  </li>
+  <li>
+    <p><code>int alloc_chrdev_region(dev_t *dev, unsigned int firstminor, unsigned int count, char *name);</code></p>
+  </li>
+  <li>
+    <p><code>void unregister_chrdev_region(dev_t first, unsigned int count);</code></p>
+  </li>
+</ul>
+
+                    </div>
+                </div>
+            </div>
+        </article>
+    </main>
+    <div id="sidebar" itemscope="itemscope" itemtype="http://schema.org/WPSideBar" style="min-height: 298px;">
+    <div id="side">
+        <aside>
+            <div id="side-fixed">
+                <div id="categories-4" class="widget widget_categories">
+                    <h3 class="side-title">カテゴリー</h3>
+
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="/category/linux">Linux(19)</a>
+                            
+                        </li>
+                        
+                        <li>
+                            <a href="/category/shell">シェル(1)</a>
+                            
+                        </li>
+                        
+                        <li>
+                            <a href="/category/network">ネットワーク(1)</a>
+                            
+                        </li>
+                        
+                        <li>
+                            <a href="/category/site">Web関連(2)</a>
+                            
+                        </li>
+                        
+                        <li>
+                            <a href="/category/subcat1">サブカテゴリ１(3)</a>
+                            
+                            <ul>
+                                
+                                <li>
+                                    <a href="/category/subcat1/subcat2">subcat2(2)</a>
+                                    
+                                    <ul>
+                                        
+                                        <li>
+                                            <a href="/category/subcat1/subcat2/subcat3">subcat3(1)</a>
+                                            
+                                        </li>
+                                        
+                                    </ul>
+                                    
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                    </ul>
+                </div>
+                <div id="search-4" class="widget widget_search">
+                    <h3 class="side-title">検索</h3>
+                    <div id="search" itemscope="" itemtype="https://schema.org/WebSite">
+                        <meta itemprop="url" content="https://linuxref.net/">
+                        <form itemprop="potentialAction" itemscope="" itemtype="https://schema.org/SearchAction"
+                            method="get" class="search-form" action="https://linuxref.net/">
+                            <meta itemprop="target" content="https://linuxref.net/?s={s}"><label><input
+                                    itemprop="query-input" type="search" class="search-field" placeholder="  サイト内検索"
+                                    value="" name="s" title="サイト内検索" required=""></label><input type="submit"
+                                class="search-submit" value="検索">
+                        </form>
+                    </div>
+                </div>
+                <div id="search-4" class="widget widget_search">
+                    <h3 class="side-title">Debug</h3>
+
+                    <div>site.data.a(level):</div>
+                    <div>site.data.b(level):</div>
+                    <div>site.data.c(level):</div>
+                    <div>site.data.d(level):</div>
+                    <div>page.data[category]:linux</div>
+                    <div>page.data[newdata]:</div>
+
+                </div>
+            </div>
+        </aside>
+    </div>
+    <!--/#side-->
+</div>
+</div>
+    </div>
+    <div id="footer" itemscope="" itemtype="https://schema.org/WPFooter">
+    <footer>
+        <div id="copyright">
+            <p class="copy">Copyright © <span itemprop="copyrightYear">2021</span>&nbsp;<span
+                    itemprop="copyrightHolder name">Jianing Bi</span> All Rights Reserved.</p>
+        </div>
+    </footer>
+</div>
+</body>
+
+</html>
